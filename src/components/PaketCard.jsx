@@ -87,7 +87,6 @@ const PaketCard = ({ paket }) => {
     const pesan = `Halo, saya *${formData.nama}* ingin memesan *${paket.nama}* ke *${paket.tujuan}*
 
 📅 Rencana Tanggal: *${formData.tanggal}*
-👥 Jumlah Peserta: *${formData.peserta || 'Belum ditentukan'}* orang
 📝 Catatan: *${formData.catatan || '-'}*
 
 *DETAIL PAKET:*
@@ -97,11 +96,11 @@ const PaketCard = ({ paket }) => {
 • Harga: ${formatHarga(paket.harga)}/group
 • Include: ${paket.include.slice(0,4).join(', ')} dll.
 
-Mohon info ketersediaan dan konfirmasi lebih lanjut.
+Mohon info ketersediaan.
 Terima kasih.`;
 
     const encodedPesan = encodeURIComponent(pesan);
-    window.open(`https://wa.me/6281234567890?text=${encodedPesan}`, '_blank');
+    window.open(`https://wa.me/628817789866?text=${encodedPesan}`, '_blank');
     setShowWAForm(false);
   };
 
@@ -304,73 +303,46 @@ Terima kasih.`;
             </div>
           </div>
 
-          {/* Expanded Content - Mobile Only */}
+          {/* ===== EXPANDED CONTENT - HANYA DESKRIPSI SINGKAT ===== */}
           <div className={`md:hidden overflow-hidden transition-all duration-500 ${
-            isExpanded ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+            isExpanded ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'
           }`}>
-            <div className="border-t border-blue-100 pt-4 space-y-4">
-              {/* Itinerary */}
+            <div className="border-t border-blue-100 pt-4">
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-2xl">
-                <p className="font-semibold text-blue-600 mb-2 text-sm flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A2 2 0 013 15.382V6.618a2 2 0 011.447-1.894L9 3m0 0l5.447 2.724A2 2 0 0116 7.618v8.764a2 2 0 01-1.447 1.894L9 20m-6-8h6m4-4h6m-6 4h6m-6 4h6" />
-                  </svg>
-                  Rencana Perjalanan
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {paket.deskripsi || `Paket wisata ${paket.tujuan} selama ${paket.durasi.toLowerCase()} dengan akomodasi hotel ${paket.hotel} dan armada ${paket.armada}. Nikmati liburan seru dengan fasilitas lengkap.`}
                 </p>
-                <ul className="space-y-1">
-                  {paket.itinerary.map((item, index) => (
-                    <li key={index} className="text-xs text-gray-600 flex items-start">
-                      <span className="text-blue-400 mr-2">•</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Semua Include */}
-              <div>
-                <p className="font-semibold text-blue-600 mb-3 text-sm flex items-center">
-                  <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  Semua Include
+                <p className="text-xs text-blue-600 mt-2">
+                  👆 Klik tombol Detail untuk lihat itinerary lengkap
                 </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {paket.include.map((item, index) => (
-                    <div key={index} className="flex items-center bg-blue-50/50 px-3 py-2 rounded-xl">
-                      <span className="text-base mr-2">{getIcon(item)}</span>
-                      <span className="text-xs text-gray-600 truncate">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Action Buttons Mobile */}
-              <div className="flex gap-2 pt-2">
-                <button 
-                  onClick={handleDetailClick}
-                  className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-blue-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                  </svg>
-                  Detail Paket
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowWAForm(true);
-                  }}
-                  className="flex-1 bg-gradient-to-r from-green-400 to-green-500 text-white py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-green-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.177.181-.076.355.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.087.289.072.39-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087.159.058 1.003.473 1.175.559.172.086.287.13.332.202.043.072.043.419-.101.824z"/>
-                  </svg>
-                  WA
-                </button>
               </div>
             </div>
+          </div>
+
+          {/* Action Buttons Mobile */}
+          <div className="md:hidden flex gap-2 mt-4">
+            <button 
+              onClick={handleDetailClick}
+              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-blue-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              Detail
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowWAForm(true);
+              }}
+              className="flex-1 bg-gradient-to-r from-green-400 to-green-500 text-white py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-green-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.177.181-.076.355.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.087.289.072.39-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087.159.058 1.003.473 1.175.559.172.086.287.13.332.202.043.072.043.419-.101.824z"/>
+              </svg>
+              WA
+            </button>
           </div>
 
           {/* Action Buttons Desktop */}
@@ -383,7 +355,7 @@ Terima kasih.`;
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
               </svg>
-              Detail Paket
+              Detail
             </button>
             
             <button

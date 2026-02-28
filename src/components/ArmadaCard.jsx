@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import ModalDetail from './ModalDetail';
+import WAFormModal from './WAFormModal';
 
 const ArmadaCard = ({ armada }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showWAForm, setShowWAForm] = useState(false);
 
   const formatHarga = (harga) => {
     return new Intl.NumberFormat('id-ID', {
@@ -54,7 +56,6 @@ const ArmadaCard = ({ armada }) => {
 
   const handleTouchEnd = (e) => {
     if (isPressed) {
-      // Cek apakah yang di-touch adalah tombol
       const isButton = e.target.closest('button') || 
                        e.target.closest('a') || 
                        e.target.closest('.expand-button');
@@ -69,21 +70,40 @@ const ArmadaCard = ({ armada }) => {
 
   // Handle klik untuk card (desktop)
   const handleCardClick = (e) => {
-    // Cek apakah yang diklik adalah tombol atau link
     if (e.target.closest('button') || e.target.closest('a') || e.target.closest('.expand-button')) {
       return;
     }
     
-    // Di desktop, buka modal
     if (window.innerWidth > 768) {
       setShowModal(true);
     }
   };
 
-  // Handle klik detail button
   const handleDetailClick = (e) => {
     e.stopPropagation();
     setShowModal(true);
+  };
+
+  // Fungsi untuk handle submit form WA
+  const handleWASubmit = (formData) => {
+    const pesan = `Halo, saya *${formData.nama}* ingin menyewa *${armada.nama}* (${armada.tipe})
+
+📅 Rencana Tanggal: *${formData.tanggal}*
+📝 Catatan: *${formData.catatan || '-'}*
+
+*DETAIL ARMADA:*
+• Kapasitas: ${armada.kapasitas} Seat
+• Harga: ${formatHarga(armada.harga)}/hari
+• Plat Nomor: ${armada.plat}
+• Rating: ${armada.rating} (${armada.totalUlasan} ulasan)
+• Fasilitas: ${armada.spesifikasi.slice(0,5).join(', ')}
+
+Mohon info ketersediaan.
+Terima kasih.`;
+
+    const encodedPesan = encodeURIComponent(pesan);
+    window.open(`https://wa.me/628817789866?text=${encodedPesan}`, '_blank');
+    setShowWAForm(false);
   };
 
   return (
@@ -136,7 +156,6 @@ const ArmadaCard = ({ armada }) => {
         <div 
           className="relative overflow-hidden h-48 md:h-56"
           onClick={(e) => {
-            // Di mobile, klik gambar juga toggle expand
             if (window.innerWidth <= 768) {
               e.stopPropagation();
               setIsExpanded(!isExpanded);
@@ -258,13 +277,11 @@ const ArmadaCard = ({ armada }) => {
             </div>
           </div>
 
-          {/* ===== INI BAGIAN YANG DIPERBAIKI ===== */}
-          {/* Expanded Content - Mobile Only (SEDERHANA) */}
+          {/* ===== EXPANDED CONTENT - HANYA DESKRIPSI SINGKAT ===== */}
           <div className={`md:hidden overflow-hidden transition-all duration-500 ${
             isExpanded ? 'max-h-[200px] opacity-100' : 'max-h-0 opacity-0'
           }`}>
             <div className="border-t border-blue-100 pt-4">
-              {/* Hanya Deskripsi Singkat */}
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-2xl">
                 <p className="text-sm text-gray-600 leading-relaxed">
                   {armada.deskripsi || `Bus ${armada.tipe.toLowerCase()} dengan kapasitas ${armada.kapasitas} seat. Dilengkapi dengan fasilitas premium untuk kenyamanan perjalanan Anda.`}
@@ -275,13 +292,12 @@ const ArmadaCard = ({ armada }) => {
               </div>
             </div>
           </div>
-          {/* ===== END BAGIAN YANG DIPERBAIKI ===== */}
 
-          {/* Action Buttons Mobile - TETAP DI BAWAH EXPANDED CONTENT */}
-          <div className="md:hidden flex gap-2 mt-2">
+          {/* Action Buttons Mobile */}
+          <div className="md:hidden flex gap-2 mt-4">
             <button 
               onClick={handleDetailClick}
-              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3 rounded-xl font-semibold text-sm shadow-lg shadow-blue-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
+              className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-blue-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -289,18 +305,18 @@ const ArmadaCard = ({ armada }) => {
               </svg>
               Detail
             </button>
-            <a 
-              href={`https://wa.me/6281234567890?text=Halo%20saya%20tertarik%20dengan%20${armada.nama}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex-1 bg-gradient-to-r from-green-400 to-green-500 text-white py-3 rounded-xl font-semibold text-sm shadow-lg shadow-green-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowWAForm(true);
+              }}
+              className="flex-1 bg-gradient-to-r from-green-400 to-green-500 text-white py-3.5 rounded-xl font-semibold text-sm shadow-lg shadow-green-200/50 hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-1"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.177.181-.076.355.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.087.289.072.39-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087.159.058 1.003.473 1.175.559.172.086.287.13.332.202.043.072.043.419-.101.824z"/>
               </svg>
               WA
-            </a>
+            </button>
           </div>
 
           {/* Action Buttons Desktop */}
@@ -316,18 +332,18 @@ const ArmadaCard = ({ armada }) => {
               Detail
             </button>
             
-            <a 
-              href={`https://wa.me/6281234567890?text=Halo%20saya%20tertarik%20dengan%20${armada.nama}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowWAForm(true);
+              }}
               className="flex-1 bg-gradient-to-r from-green-400 to-green-500 text-white py-3 rounded-xl font-semibold shadow-md hover:shadow-lg hover:from-green-500 hover:to-green-600 transition-all duration-300 transform hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-1 group"
             >
               <svg className="w-5 h-5 group-hover:animate-pulse" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.087-.177.181-.076.355.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86.174.087.289.072.39-.043.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087.159.058 1.003.473 1.175.559.172.086.287.13.332.202.043.072.043.419-.101.824z"/>
               </svg>
               WA
-            </a>
+            </button>
           </div>
         </div>
 
@@ -344,6 +360,15 @@ const ArmadaCard = ({ armada }) => {
           onClose={() => setShowModal(false)} 
         />
       )}
+
+      {/* WA Form Modal */}
+      <WAFormModal
+        isVisible={showWAForm}
+        onClose={() => setShowWAForm(false)}
+        item={armada}
+        tipe="armada"
+        onSubmit={handleWASubmit}
+      />
     </>
   );
 };
