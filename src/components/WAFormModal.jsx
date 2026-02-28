@@ -20,6 +20,18 @@ const WAFormModal = ({ isVisible, onClose, item, tipe, onSubmit }) => {
 
   if (!isVisible) return null;
 
+  // Format tanggal untuk display
+  const formatTanggal = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm transition-all duration-300"
@@ -47,7 +59,7 @@ const WAFormModal = ({ isVisible, onClose, item, tipe, onSubmit }) => {
           </p>
         </div>
 
-        {/* Form Sederhana */}
+        {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Nama Lengkap */}
           <div>
@@ -65,30 +77,39 @@ const WAFormModal = ({ isVisible, onClose, item, tipe, onSubmit }) => {
             />
           </div>
 
-          {/* Rencana Tanggal */}
+          {/* Rencana Tanggal - DATE PICKER */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Rencana Tanggal <span className="text-red-500">*</span>
             </label>
             <input
-              type="text"
+              type="date"
               name="tanggal"
               value={formData.tanggal}
               onChange={handleChange}
               required
-              placeholder="Contoh: 15-17 Juni 2024"
+              min={new Date().toISOString().split('T')[0]} // Minimal hari ini
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            {formData.tanggal && (
+              <p className="text-xs text-gray-500 mt-1">
+                Tanggal dipilih: {formatTanggal(formData.tanggal)}
+              </p>
+            )}
           </div>
 
           {/* Informasi Data yang akan dikirim */}
           <div className="bg-blue-50 p-4 rounded-xl">
-            <p className="text-xs text-blue-600 font-semibold mb-2">Data yang akan dikirim:</p>
+            <p className="text-xs text-blue-600 font-semibold mb-2">Ringkasan Pemesanan:</p>
             <p className="text-sm text-gray-600">
               <span className="font-medium">Nama:</span> {formData.nama || 'Belum diisi'}<br/>
-              <span className="font-medium">Tanggal:</span> {formData.tanggal || 'Belum diisi'}<br/>
-              <span className="font-medium">Paket:</span> {item?.nama}<br/>
-              <span className="font-medium">Tujuan:</span> {item?.tujuan || item?.tipe}
+              <span className="font-medium">Tanggal:</span> {formData.tanggal ? formatTanggal(formData.tanggal) : 'Belum diisi'}<br/>
+              <span className="font-medium">{tipe === 'paket' ? 'Paket:' : 'Armada:'}</span> {item?.nama}<br/>
+              {tipe === 'paket' ? (
+                <><span className="font-medium">Tujuan:</span> {item?.tujuan}</>
+              ) : (
+                <><span className="font-medium">Tipe:</span> {item?.tipe}</>
+              )}
             </p>
           </div>
 

@@ -4,7 +4,7 @@ export const armadaData = [
       nama: "Big Bus VIP",
       tipe: "Big Bus",
       kapasitas: 50,
-      foto: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      foto: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=50",
       rating: 4.9,
       totalUlasan: 128,
       spesifikasi: [
@@ -24,7 +24,7 @@ export const armadaData = [
       nama: "Medium Bus Executive",
       tipe: "Medium Bus",
       kapasitas: 31,
-      foto: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      foto: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=50",
       rating: 4.7,
       totalUlasan: 95,
       spesifikasi: [
@@ -42,7 +42,7 @@ export const armadaData = [
       nama: "Isuzu Elf Long",
       tipe: "Minibus",
       kapasitas: 19,
-      foto: "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      foto: "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=50",
       rating: 4.8,
       totalUlasan: 154,
       spesifikasi: [
@@ -60,7 +60,7 @@ export const armadaData = [
       nama: "Toyota Hiace Commuter",
       tipe: "Minivan",
       kapasitas: 14,
-      foto: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      foto: "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=50",
       rating: 4.9,
       totalUlasan: 210,
       spesifikasi: [
@@ -78,7 +78,7 @@ export const armadaData = [
       nama: "Big Bus SHD",
       tipe: "Big Bus",
       kapasitas: 59,
-      foto: "https://images.unsplash.com/photo-1557223562-6c77ef16210f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      foto: "https://images.unsplash.com/photo-1557223562-6c77ef16210f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=50",
       rating: 4.8,
       totalUlasan: 112,
       spesifikasi: [
@@ -96,7 +96,7 @@ export const armadaData = [
       nama: "Double Decker Luxury",
       tipe: "Bus Tingkat",
       kapasitas: 40,
-      foto: "https://images.unsplash.com/photo-1570431327118-2045cc9115ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+      foto: "https://images.unsplash.com/photo-1570431327118-2045cc9115ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=50",
       rating: 12.0,
       totalUlasan: 85,
       spesifikasi: [
