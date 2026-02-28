@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(145deg, #f0f9ff 0%, #e6f0fa 50%, #d9e9f5 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Awan bergerak yang sangat ringan (hanya CSS, tanpa JavaScript) */
+.cloud {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 1000px;
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatCloud linear infinite;
+  will-change: transform; /* Optimasi performa */
+}
+
+/* Awan 1 - paling atas, gerak paling lambat */
+.cloud-1 {
+  width: 300px;
+  height: 80px;
+  top: 10%;
+  left: -300px;
+  animation-duration: 60s;
+  opacity: 0.3;
+}
+
+/* Awan 2 - gerak sedang */
+.cloud-2 {
+  width: 400px;
+  height: 100px;
+  top: 30%;
+  left: -400px;
+  animation-duration: 80s;
+  opacity: 0.4;
+}
+
+/* Awan 3 - gerak paling cepat */
+.cloud-3 {
+  width: 250px;
+  height: 70px;
+  top: 50%;
+  left: -250px;
+  animation-duration: 50s;
+  opacity: 0.25;
+}
+
+/* Awan 4 - gerak lambat */
+.cloud-4 {
+  width: 350px;
+  height: 90px;
+  top: 70%;
+  left: -350px;
+  animation-duration: 70s;
+  opacity: 0.35;
+}
+
+/* Awan 5 - paling bawah */
+.cloud-5 {
+  width: 280px;
+  height: 75px;
+  top: 85%;
+  left: -280px;
+  animation-duration: 55s;
+  opacity: 0.3;
+}
+
+/* Animasi awan bergerak dari kiri ke kanan */
+@keyframes floatCloud {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + 500px));
+  }
+}
+
+/* Awan kedua (dari kanan ke kiri) untuk variasi */
+.cloud-right {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 1000px;
+  filter: blur(35px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatCloudRight linear infinite;
+  will-change: transform;
+}
+
+.cloud-right-1 {
+  width: 320px;
+  height: 85px;
+  top: 20%;
+  right: -320px;
+  animation-duration: 65s;
+  opacity: 0.3;
+}
+
+.cloud-right-2 {
+  width: 380px;
+  height: 95px;
+  top: 45%;
+  right: -380px;
+  animation-duration: 75s;
+  opacity: 0.35;
+}
+
+.cloud-right-3 {
+  width: 270px;
+  height: 72px;
+  top: 65%;
+  right: -270px;
+  animation-duration: 55s;
+  opacity: 0.25;
+}
+
+@keyframes floatCloudRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100vw - 500px));
+  }
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
