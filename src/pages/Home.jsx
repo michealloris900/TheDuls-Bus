@@ -20,17 +20,7 @@ const Home = () => {
     <div className="relative min-h-screen" style={{
       background: 'linear-gradient(180deg, #b8e1fc 0%, #d4eafc 30%, #e9f2fa 70%, #f0f7ff 100%)'
     }}>
-      {/* Awan bergerak dari CSS global */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="cloud cloud-1"></div>
-        <div className="cloud cloud-2"></div>
-        <div className="cloud cloud-3"></div>
-        <div className="cloud cloud-4"></div>
-        <div className="cloud cloud-5"></div>
-        <div className="cloud-right cloud-right-1"></div>
-        <div className="cloud-right cloud-right-2"></div>
-        <div className="cloud-right cloud-right-3"></div>
-      </div>
+
 
       <div className="relative z-10">
         <Navbar />

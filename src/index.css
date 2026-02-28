@@ -14,66 +14,7 @@ body {
 }
 
 /* Awan bergerak yang sangat ringan (hanya CSS, tanpa JavaScript) */
-.cloud {
-  position: fixed;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 1000px;
-  filter: blur(30px);
-  pointer-events: none;
-  z-index: 0;
-  animation: floatCloud linear infinite;
-  will-change: transform; /* Optimasi performa */
-}
 
-/* Awan 1 - paling atas, gerak paling lambat */
-.cloud-1 {
-  width: 300px;
-  height: 80px;
-  top: 10%;
-  left: -300px;
-  animation-duration: 60s;
-  opacity: 0.3;
-}
-
-/* Awan 2 - gerak sedang */
-.cloud-2 {
-  width: 400px;
-  height: 100px;
-  top: 30%;
-  left: -400px;
-  animation-duration: 80s;
-  opacity: 0.4;
-}
-
-/* Awan 3 - gerak paling cepat */
-.cloud-3 {
-  width: 250px;
-  height: 70px;
-  top: 50%;
-  left: -250px;
-  animation-duration: 50s;
-  opacity: 0.25;
-}
-
-/* Awan 4 - gerak lambat */
-.cloud-4 {
-  width: 350px;
-  height: 90px;
-  top: 70%;
-  left: -350px;
-  animation-duration: 70s;
-  opacity: 0.35;
-}
-
-/* Awan 5 - paling bawah */
-.cloud-5 {
-  width: 280px;
-  height: 75px;
-  top: 85%;
-  left: -280px;
-  animation-duration: 55s;
-  opacity: 0.3;
-}
 
 /* Animasi awan bergerak dari kiri ke kanan */
 @keyframes floatCloud {
